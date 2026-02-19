@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <!-- CONFIGURACIÓN BÁSICA -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú | Brasa Urbana</title>
+
+  <!-- CONEXIÓN AL CSS PRINCIPAL -->
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/menu.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="logo">BU</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="menu.html">Menú</a></li>
+  </ul>
+
+
+<!-- ================= CARRITO ================= -->
+<div class="cart">
+  🛒 <span id="cart-count">0</span>
+</div>
+</nav>
+
+  <!-- HERO DEL MENÚ (Parte superior visual) -->
+
+
+  <header class="menu-hero">
+    <h1>Nuestro Menú</h1>
+    <p>Sabor que enciende la ciudad 🔥</p>
+  </header>
+
+  <!-- FILTROS  -->
+<div class="filters">
+  <button class="filter-btn active" onclick="filterCategory('all')">Todo</button>
+  <button class="filter-btn" onclick="filterCategory('burger')">Hamburguesas</button>
+  <button class="filter-btn" onclick="filterCategory('drink')">Bebidas</button>
+  <button class="filter-btn" onclick="filterCategory('dessert')">Postres</button>
+</div>
+
+
+
+  <!-- SECCIÓN: COMIDAS -->
+
+
+  <section class="menu-section">
+    <h2>🍔 Hamburguesas</h2>
+
+    <div class="menu-grid">
+
+      <!-- CARD 1 -->
+      <div class="menu-card" data-category="burger">
+        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349" alt="Hamburguesa clásica">
+        <h3>La Clásica</h3>
+        <p>Carne 180g, queso cheddar, lechuga y salsa especial.</p>
+        <span class="price">$180</span>
+        <button>Pedir ahora</button>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="menu-card" data-category="burger">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" alt="Doble Brasa">
+        <h3>Doble Fuego</h3>
+        <p>Doble carne, queso cheddar, tocino crocante.</p>
+        <span class="price">$220</span>
+        <button>Pedir ahora</button>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- SECCIÓN: BEBIDAS -->
+
+
+  <section class="menu-section">
+    <h2>🥤 Bebidas</h2>
+
+    <div class="menu-grid">
+
+      <div class="menu-card" data-category="drink">
+        <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97" alt="Refresco">
+        <h3>Refresco</h3>
+        <p>Cola, naranja o limón.</p>
+        <span class="price">$40</span>
+        <button>Pedir ahora</button>
+      </div>
+
+      <div class="menu-card" data-category="drink">
+        <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699" alt="Malteada">
+        <h3>Malteada</h3>
+        <p>Chocolate, fresa o vainilla.</p>
+        <span class="price">$85</span>
+        <button>Pedir ahora</button>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- SECCIÓN: POSTRES -->
+  
+
+  <section class="menu-section">
+    <h2>🍰 Postres</h2>
+
+    <div class="menu-grid">
+
+      <div class="menu-card" data-category="dessert">
+        <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c" alt="Brownie">
+        <h3>Brownie caliente</h3>
+        <p>Servido con helado de vainilla.</p>
+        <span class="price">$95</span>
+        <button>Pedir ahora</button>
+      </div>
+
+    </div>
+  </section>
+<!--FOOTER-->
+<footer class="menu-footer">
+  <p>© 2026 Brasa Urbana | Todos los derechos reservados</p>
+</footer>
+
+
+<!--Botón flotante whatsapp-->
+  <a href="https://wa.me/523122677809" 
+   class="whatsapp-float" 
+   target="_blank">
+   💬
+</a>
+
+<!-- Js para que el boton "Pedir Ahora" sume productos -->
+ <script>
+let count = 0;
+const buttons = document.querySelectorAll(".menu-card button");
+const cartCount = document.getElementById("cart-count");
+
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    count++;
+    cartCount.textContent = count;
+  });
+});
+</script>
+<!--JS del Filtro de Categorías -->
+<script>
+function filterCategory(category) {
+  const cards = document.querySelectorAll(".menu-card");
+  cards.forEach(card => {
+    if (category === "all" || card.dataset.category === category) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+</script>
+
+<!--JS para resaltar el botón activo -->
+<script>
+const filterButtons = document.querySelectorAll(".filter-btn");
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    filterButtons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+  });
+});
+</script>
+
+<!--JS animacion suave al scroll-->
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+});
+
+document.querySelectorAll(".menu-card").forEach(card => {
+  observer.observe(card);
+});
+</script>
+<!--JS transicion entre páginas-->
+<script>
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+</script>
+
+</body>
+</html>

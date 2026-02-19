@@ -1,0 +1,109 @@
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================= BODY ================= */
+body {
+  line-height: 1.6;
+  background: #0e0e0e;
+  font-family: 'Inter', sans-serif;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+/* ================= TIPOGRAFÍA ================= */
+h1, h2, h3 {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: #111;
+  color:#ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 10%;
+  z-index: 1000;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin-left: auto;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #ff7b00;
+}
+
+/* ================= LOGO ================= */
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff7b00;
+  text-decoration: none;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
+
+/* ================= CARRITO ================= */
+.cart {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+.cart span {
+  background: #ff7b00;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+/* ================= FOOTER ================= */
+.footer,
+.menu-footer {
+  background: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+}
+
+/* ================= BOTÓN WHATSAPP ================= */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: white;
+  font-size: 24px;
+  padding: 15px;
+  border-radius: 50%;
+  text-decoration: none;
+  z-index: 1000;
+}

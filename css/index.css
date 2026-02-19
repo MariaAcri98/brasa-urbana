@@ -1,27 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  line-height: 1.6;
-  background: linear-gradient(180deg, #fafafa 0%, #f1f1f1 100%);;
-  font-family: 'Inter', sans-serif;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.reveal.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .hero {
   position: relative;
   height: 100vh;
@@ -167,7 +143,7 @@ h2 {
   margin-bottom: 3rem;
 }
 
-/*decoractivo*/
+/* decoractivo */
 h2::after {
 
   content: "";
@@ -199,10 +175,6 @@ section:hover h2::after {
   border-radius: 10px;
 }
 
-
-h1, h2, h3 {
-    font-family: 'Poppins', sans-serif;
-}
 
 .menu {
   background: linear-gradient(145deg, #1c1c1c, #161616);
@@ -434,7 +406,9 @@ background: #1c1c1c;
 .benefits .item p {
   color: #bbb;
 }
-
+.about{
+    color:white
+}
 .about-container {
   display: flex;
   align-items: center;
@@ -446,6 +420,10 @@ background: #1c1c1c;
 .about-text {
   flex: 1;
   max-width: 520px;
+}
+
+.about-text p{
+    color: #ccc;
 }
 
 .about-image {
@@ -463,14 +441,13 @@ background: #1c1c1c;
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
-/* ===============================
-   UBICACIÓN Y HORARIOS
-================================= */
+/* UBICACIÓN Y HORARIOS */
 
 .location {
   max-width: 1100px;
   margin: 4rem auto;
   padding: 4rem 2rem;
+    color: white;
 }
 
 .location-content {
@@ -479,6 +456,7 @@ background: #1c1c1c;
   gap: 4rem;
   flex-wrap: wrap;
   margin-top: 3rem;
+  color:#1c1c1c
 }
 
 .location-info,
@@ -522,9 +500,7 @@ background: #1c1c1c;
   border: none;
 }
 
-/* ===============================
-   FOOTER
-================================= */
+/* FOOTER */
 
 .footer {
   background: #111;
