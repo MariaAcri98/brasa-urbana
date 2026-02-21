@@ -21,9 +21,20 @@
   </ul>
 
 <!-- ================= CARRITO ================= -->
-<div class="cart">
+<div class="cart" id="cartButton">
   🛒 <span id="cart-count">0</span>
+</div>  
+<div id="cartPanel">
+  <div id="cartItems"></div>
+
+  <p>Total: $<span id="cartTotal">0.00</span></p>
+
+  <button id="checkoutBtn">Finalizar Compra</button>
+  <button id="clearCartBtn">Vaciar carrito</button>
+  <button id="closeCart">Cerrar</button>
 </div>
+
+ 
 </nav>
 <!--Estructura HTML para el sitio web de Brasa Urbana-->
   <header class="hero">
@@ -165,6 +176,7 @@
   </div>
 
 </footer>
-<script src="/JS/main.js"></script>
+<script src="/JS/main.js" ></script>
+<script src="/JS/menu.js"></script>
 </body>
 </html>

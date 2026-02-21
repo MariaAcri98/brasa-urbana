@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const cartTotal = document.getElementById("cartTotal");
   const cartPanel = document.getElementById("cartPanel");
   const cartBtn = document.getElementById("cartButton");
+  const clearCartBtn = document.getElementById("clearCartBtn");
   const closeBtn = document.getElementById("closeCart");
 
   function saveCart() {
@@ -26,14 +27,14 @@ document.addEventListener("DOMContentLoaded", function () {
       div.classList.add("cart-item");
 
       div.innerHTML = `
-        <span>${item.name}</span>
+      <span>${item.name}</span>
         <div>
-          <button onclick="decreaseQty(${index})">-</button>
-          <span>${item.quantity}</span>
-          <button onclick="increaseQty(${index})">+</button>
+        <button class="qty-btn" onclick="decreaseQty(${index})">-</button>
+        <span class="qty-number">${item.quantity}</span>
+        <button class="qty-btn" onclick="increaseQty(${index})">+</button>
         </div>
         <span>$${(item.price * item.quantity).toFixed(2)}</span>
-        <button onclick="removeItem(${index})">❌</button>
+        <button class="removeItem" onclick="removeItem(${index})">❌</button>
       `;
 
       cartItemsContainer.appendChild(div);
@@ -92,8 +93,25 @@ document.addEventListener("DOMContentLoaded", function () {
       cartPanel.classList.remove("open");
     });
   }
+// VACIAR CARRITO
+  if (clearCartBtn) {
+  clearCartBtn.addEventListener("click", function () {
+    cart = [];
+    saveCart();
+    updateCartUI();
+  });
+}
 
-  updateCartUI();
+  updateCartUI()
+  document.querySelectorAll(".removeItem").forEach(btn => {
+  btn.addEventListener("click", function () {
+    const index = this.getAttribute("data-index");
+    cart.splice(index, 1);
+    cartCount--;
+    cartNumber.textContent = cartCount;
+    updateCartUI();
+  });
+});;
 
 
     document.body.classList.add("loaded");
