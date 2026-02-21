@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Finalizar Compra</title>
+  <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+
+  <div class="checkout-container">
+    <h1>Resumen de tu pedido</h1>
+
+    <div id="checkoutItems"></div>
+
+    <h2>Total: $<span id="checkoutTotal">0.00</span></h2>
+
+      <hr>
+
+  <h2>Datos de envío</h2>
+
+  <input type="text" id="customerName" placeholder="Nombre completo">
+
+  <input type="text" id="address" placeholder="Dirección de envío">
+
+  <select id="paymentMethod">
+    <option value="">Seleccionar método de pago</option>
+    <option value="card">Tarjeta</option>
+    <option value="cash">Efectivo</option>
+  </select>
+
+  <div id="cardDetails" style="display:none;">
+    <input type="text" id="cardNumber" placeholder="Número de tarjeta">
+    <div id="cardLogo"></div>
+    <input type="text" id="cardExpiry" placeholder="MM/AA">
+    <input type="text" id="cardCVV" placeholder="CVV">
+  </div>
+
+    <button id="confirmOrderBtn">Confirmar Pedido</button>
+
+    <div id="orderMessage"></div>
+  </div>
+
+  <script src="/JS/checkout.js"></script>
+</body>
+</html>

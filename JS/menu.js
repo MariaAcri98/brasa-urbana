@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const cartBtn = document.getElementById("cartButton");
   const clearCartBtn = document.getElementById("clearCartBtn");
   const closeBtn = document.getElementById("closeCart");
+  const checkoutBtn = document.getElementById("checkoutBtn");
 
   function saveCart() {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -99,6 +100,11 @@ document.addEventListener("DOMContentLoaded", function () {
     cart = [];
     saveCart();
     updateCartUI();
+  });
+}
+if (checkoutBtn) {
+  checkoutBtn.addEventListener("click", function () {
+    window.location.href = "checkout.html";
   });
 }
 
