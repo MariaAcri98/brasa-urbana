@@ -10,6 +10,37 @@ document.addEventListener("DOMContentLoaded", function () {
   const cardDetails = document.getElementById("cardDetails");
   const cardNumberInput = document.getElementById("cardNumber");
   const cardLogo = document.getElementById("cardLogo");
+  /* ========================= */
+/* TOGGLE MODO OSCURO */
+/* ========================= */
+
+const toggleBtn = document.getElementById("themeToggle");
+console.log(toggleBtn);
+
+// Detectar preferencia guardada
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
+  document.body.classList.add("dark-mode");
+  toggleBtn.textContent = "🌞 ";
+} else if (!savedTheme) {
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    document.body.classList.add("dark-mode");
+    toggleBtn.textContent = "🌞 ";
+  }
+}
+
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+    toggleBtn.textContent = "🌞 ";
+  } else {
+    localStorage.setItem("theme", "light");
+    toggleBtn.textContent = "🌙 ";
+  }
+});
 
   let total = 0;
 
@@ -40,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const payment = paymentMethod.value;
 
     if (!name || !address || !payment) {
-      alert("Por favor completa todos los campos.");
       return;
     }
 
@@ -51,23 +81,23 @@ document.addEventListener("DOMContentLoaded", function () {
       const cvv = document.getElementById("cardCVV").value.trim();
 
       if (!validateCardNumber(cardNumber)) {
-        alert("Número de tarjeta inválido.");
+        
         return;
       }
 
       const type = getCardType(cardNumber);
       if (type === "Desconocida") {
-        alert("Tipo de tarjeta no aceptado.");
+       
         return;
       }
 
       if (!validateExpiry(expiry)) {
-        alert("Fecha de expiración inválida.");
+      
         return;
       }
 
       if (!validateCVV(cardNumber, cvv)) {
-        alert("CVV inválido.");
+        
         return;
       }
     }
@@ -82,49 +112,107 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.removeItem("cart");
   });
 
-  cardNumberInput.addEventListener("input", function () {
+cardNumberInput.addEventListener("input", function () {
 
-  const number = this.value.replace(/\s+/g, "");
+  let value = this.value;
 
-  //const type = getCardType(number);
+  //  Eliminar todo lo que no sea número
+  value = value.replace(/\D/g, "");
 
-  // Mostrar logo según tipo
+  //  Detectar tipo de tarjeta
+  const type = getCardType(value);
 
-  if (/^4/.test(number)) {
+  //  Formatear según tipo
+  if (type === "American Express") {
+    // Formato 4-6-5
+    value = value.replace(/(\d{4})(\d{6})(\d{0,5})/, function(_, g1, g2, g3) {
+      return g1 + " " + g2 + (g3 ? " " + g3 : "");
+    });
+  } else {
+    // Formato normal 4-4-4-4
+    value = value.replace(/(\d{4})(?=\d)/g, "$1 ");
+  }
 
+  this.value = value.trim();
+
+  const cleanNumber = value.replace(/\s+/g, "");
+
+  // Mostrar logo automáticamente
+  if (type === "Visa") {
     cardLogo.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Farm-Fresh_visa_2.png" height="30">';
   }
-  else if (/^5[1-5]/.test(number)) {
-
-    cardLogo.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" height="30">';
-
+  else if (type === "MasterCard") {
+    cardLogo.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" height="30">';
   }
-  else if (/^3[47]/.test(number)) {
-
+  else if (type === "American Express") {
     cardLogo.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg" height="30">';
   }
   else {
-
     cardLogo.innerHTML = "";
   }
-   // Reset clases
-  this.classList.remove("valid-card");
-  this.classList.remove("invalid-card");
 
-  // Si aún no tiene suficientes dígitos, no marcar
-  if (number.length < 13) return;
+  //  Validación visual
+  this.classList.remove("valid-card", "invalid-card");
 
-  // Validar con Luhn
-  if (validateCardNumber(number)) {
+  if (cleanNumber.length < 15) return;
+
+  if (validateCardNumber(cleanNumber) && type !== "Desconocida") {
     this.classList.add("valid-card");
   } else {
     this.classList.add("invalid-card");
   }
 
+  updateButtonState(); // importante para botón inteligente
+
+  
 });
 
-
 });
+
+function checkFormValidity() {
+
+  const name = document.getElementById("customerName").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const payment = paymentMethod.value;
+
+  if (!name || name.length < 3) return false;
+  if (!address || address.length < 5) return false;
+  if (!payment) return false;
+
+  if (payment === "card") {
+
+    const cardNumber = document.getElementById("cardNumber").value.replace(/\s+/g, "");
+    const expiry = document.getElementById("cardExpiry").value.trim();
+    const cvv = document.getElementById("cardCVV").value.trim();
+
+    if (!validateCardNumber(cardNumber)) return false;
+    if (getCardType(cardNumber) === "Desconocida") return false;
+    if (!validateExpiry(expiry)) return false;
+    if (!validateCVV(cardNumber, cvv)) return false;
+  }
+
+  return true;
+}
+
+const allInputs = document.querySelectorAll("input, select");
+
+allInputs.forEach(input => {
+  input.addEventListener("input", updateButtonState);
+  input.addEventListener("change", updateButtonState);
+});
+
+function updateButtonState() {
+  if (checkFormValidity()) {
+    confirmOrderBtn.disabled = false;
+    confirmOrderBtn.classList.add("active");
+  } else {
+    confirmOrderBtn.disabled = true;
+    confirmOrderBtn.classList.remove("active");
+  }
+}
+
+
+
 
 
 
@@ -191,4 +279,105 @@ function validateCVV(number, cvv) {
     return /^\d{3}$/.test(cvv);
   }
 }
+
+/*Validación visual del Nombre*/
+
+const nameInput = document.getElementById("customerName");
+
+nameInput.addEventListener("input", function () {
+
+  this.classList.remove("valid-field", "invalid-field");
+
+  if (this.value.trim().length === 0) return;
+
+  if (this.value.trim().length >= 3) {
+    this.classList.add("valid-field");
+  } else {
+    this.classList.add("invalid-field");
+  }
+
+  updateButtonState();
+});
+/*Validación visual de la Dirección*/
+const addressInput = document.getElementById("address");
+
+addressInput.addEventListener("input", function () {
+
+  this.classList.remove("valid-field", "invalid-field");
+
+  if (this.value.trim().length === 0) return;
+
+  if (this.value.trim().length >= 5) {
+    this.classList.add("valid-field");
+  } else {
+    this.classList.add("invalid-field");
+  }
+
+  updateButtonState();
+});
+/*Validación visual de la Fecha de Expiración*/
+const expiryInput = document.getElementById("cardExpiry");
+
+expiryInput.addEventListener("input", function () {
+
+  this.classList.remove("valid-field", "invalid-field");
+
+  if (this.value.trim().length < 5) return;
+
+  if (validateExpiry(this.value.trim())) {
+    this.classList.add("valid-field");
+  } else {
+    this.classList.add("invalid-field");
+  }
+
+  updateButtonState();
+});
+/*Validación visual del CVV*/
+const cvvInput = document.getElementById("cardCVV");
+
+cvvInput.addEventListener("input", function () {
+
+  this.classList.remove("valid-field", "invalid-field");
+
+  const cardNumber = document.getElementById("cardNumber").value.replace(/\s+/g, "");
+  const cvv = this.value.trim();
+
+  if (cvv.length === 0) return;
+
+  if (validateCVV(cardNumber, cvv)) {
+    this.classList.add("valid-field");
+  } else {
+    this.classList.add("invalid-field");
+  }
+
+  updateButtonState();
+});
+/*función para activar el shake*/
+function triggerShake(element) {
+  element.classList.add("shake");
+
+  setTimeout(() => {
+    element.classList.remove("shake");
+  }, 300);
+}
+/*Activarlo cuando el campo sea inválido*/ 
+nameInput.addEventListener("input", function () {
+
+  this.classList.remove("valid-field", "invalid-field");
+
+  if (this.value.trim().length === 0) return;
+
+  if (this.value.trim().length >= 3) {
+    this.classList.add("valid-field");
+  } else {
+    this.classList.add("invalid-field");
+    triggerShake(this);
+  }
+
+  updateButtonState();
+});
+
+
+
+
 

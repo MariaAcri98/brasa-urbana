@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finalizar Compra</title>
   <link rel="stylesheet" href="/css/checkout.css">
 </head>
@@ -9,6 +10,7 @@
 
   <div class="checkout-container">
     <h1>Resumen de tu pedido</h1>
+    <button id="themeToggle" class="theme-toggle">🌙 Modo Oscuro</button>
 
     <div id="checkoutItems"></div>
 
@@ -28,17 +30,23 @@
     <option value="cash">Efectivo</option>
   </select>
 
-  <div id="cardDetails" style="display:none;">
-    <input type="text" id="cardNumber" placeholder="Número de tarjeta">
+<div id="cardDetails" class="card-details" style="display:none;">
+
+  <div class="card-number-wrapper">
+    <input type="tel" id="cardNumber" maxlength="19" inputmode="numeric" placeholder="Número de tarjeta">
     <div id="cardLogo"></div>
+  </div>
+
+  <div class="card-row">
     <input type="text" id="cardExpiry" placeholder="MM/AA">
-    <input type="text" id="cardCVV" placeholder="CVV">
+    <input type="tel" id="cardCVV" inputmode="numeric" placeholder="CVV">
   </div>
 
-    <button id="confirmOrderBtn">Confirmar Pedido</button>
+</div>
 
-    <div id="orderMessage"></div>
-  </div>
+<button id="confirmOrderBtn" disabled>Confirmar Pedido</button>
+
+<div id="orderMessage"></div>
 
   <script src="/JS/checkout.js"></script>
 </body>

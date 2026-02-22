@@ -1,3 +1,9 @@
+* {
+  transition: background-color 0.4s ease,
+              color 0.4s ease,
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
+}
 /* Fondo general */
 body {
   margin: 0;
@@ -5,15 +11,41 @@ body {
   background: #f4f4f4;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding: 20px 0;
   min-height: 100vh;
 }
+body,
+.checkout-container,
+input,
+select,
+button {
+  transition: 
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
 
-/* Contenedor principal */
+input,
+select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/*contenedo principal*/
 .checkout-container {
   background: white;
+  width: 100%;
+  max-width: 400px;
   padding: 40px;
-  width: 400px;
+  margin: auto;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
@@ -23,6 +55,20 @@ body {
   margin-bottom: 20px;
   font-size: 26px;
   text-align: center;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
 }
 
 /* Items */
@@ -42,20 +88,19 @@ body {
 
 /* Botón confirmar */
 #confirmOrderBtn {
-  width: 100%;
-  margin-top: 20px;
-  padding: 12px;
-  background: black;
-  color: white;
+  padding: 12px 20px;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.2s;
+  font-weight: bold;
+  cursor: not-allowed;
+  background-color: #ccc;
+  transition: all 0.3s ease;
 }
 
-#confirmOrderBtn:hover {
-  background: #333;
+#confirmOrderBtn.active {
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
 }
 
 /* Mensaje final */
@@ -63,6 +108,17 @@ body {
   margin-top: 20px;
   text-align: center;
   font-size: 18px;
+}
+/*Inputs en columna para móvil*/
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input, select {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Formulario*/
@@ -81,11 +137,7 @@ body {
 }
 
 #cardNumber {
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  outline: none;
+  padding-right: 60px;
 }
 
 .valid-card {
@@ -106,4 +158,98 @@ body {
 
 #cardLogo img {
   height: 100%;
+}
+
+.valid-field {
+  border: 2px solid #28a745 !important;
+  background-color: #f0fff4 !important;
+}
+
+.invalid-field {
+  border: 2px solid #dc3545 !important;
+  background-color: #fff5f5 !important;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.3s ease;
+}
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Número + logo alineados */
+.card-number-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#cardLogo {
+  position: absolute;
+  right: 10px;
+}
+
+/* Fecha y CVV en fila */
+.card-row {
+  display: flex;
+  gap: 10px;
+}
+
+.card-row input {
+  flex: 1;
+}
+
+/* Botón full ancho */
+#confirmOrderBtn {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 600px) {
+
+  .card-row {
+    flex-direction: column;
+  }
+
+}
+
+
+
+/* MODO OSCURO MANUAL */
+body.dark-mode {
+  background: #121212;
+  color: #f1f1f1;
+}
+
+body.dark-mode .checkout-container {
+  background: #1e1e1e;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode input,
+body.dark-mode select {
+  background: #2a2a2a;
+  color: #f1f1f1;
+  border: 1px solid #444;
+}
+
+body.dark-mode input::placeholder {
+  color: #aaa;
+}
+
+body.dark-mode #checkoutItems div {
+  border-bottom: 1px solid #333;
 }
